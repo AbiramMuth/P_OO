@@ -11,6 +11,7 @@ namespace SpaceInvaders
 
         // La flotte est l'ensemble des drones qui évoluent dans notre espace aérien
         private List<Player> fleet;
+        private List<Projectile> shoot = new List<Projectile>();
 
         BufferedGraphicsContext currentContext;
         BufferedGraphics airspace;
@@ -28,10 +29,10 @@ namespace SpaceInvaders
             // dimensions the same size as the drawing surface of the form.
             airspace = currentContext.Allocate(this.CreateGraphics(), this.DisplayRectangle);
 
-            // Gestion des touches clavier et souris
+            // Gestion des touches du clavier
             this.KeyDown += new KeyEventHandler(Pressed);
             this.KeyUp += new KeyEventHandler(Unpressed);
-
+            
             this.fleet = fleet;
         }
 
@@ -71,7 +72,10 @@ namespace SpaceInvaders
             {
                 drone.Render(airspace);
             }
-
+            foreach (Projectile projectile in shoot)
+            {
+                projectile.Render(airspace);
+            }
             airspace.Render();
         }
 
@@ -82,6 +86,16 @@ namespace SpaceInvaders
             foreach (Player drone in fleet)
             {
                 drone.Update(Left, Right);
+
+                Projectile projectile = new Projectile();
+                projectile.x = drone.x;
+                projectile.y = drone.y;
+                shoot.Add(projectile);
+
+            }
+            foreach (Projectile projectile in shoot)
+            {
+                projectile.Update();
             }
         }
 

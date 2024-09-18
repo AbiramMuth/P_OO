@@ -20,6 +20,5 @@ namespace SpaceInvaders
         {
             return $"{name} ({((int)((double)charge / 1000 * 100)).ToString()}%)";
         }
-
     }
 }

@@ -19,7 +19,7 @@ namespace SpaceInvaders
             drone.y = PlayForm.HEIGHT - 50;
             drone.name = "BOB";
             fleet.Add(drone);
-          
+
 
             // Démarrage
             Application.Run(new PlayForm(fleet));

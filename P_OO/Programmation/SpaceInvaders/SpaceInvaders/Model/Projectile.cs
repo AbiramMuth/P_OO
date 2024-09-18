@@ -7,9 +7,15 @@
         public int y;                                 // Position en Y depuis le haut de l'espace aérien
 
         // Mouvement de l'utilisateur horizontalement, sans sortir du cadre du jeu
-        public void Update()
+        public void Update(bool space)
         {
-            y -= 5;
+            if(!space) 
+            {
+                y -= 5;
+            }
+           
+
+
         }
     }
 }

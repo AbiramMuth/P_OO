@@ -10,13 +10,6 @@
         public int x;                                // Position en X depuis la gauche de l'espace aérien
         public int y;                                 // Position en Y depuis le haut de l'espace aérien
 
-        private string[] shoot =
-        {
-            @"  |  ",
-            @"  |  ",
-            @"  |  ",
-        };
-
 
 
         // Mouvement de l'utilisateur horizontalement, sans sortir du cadre du jeu

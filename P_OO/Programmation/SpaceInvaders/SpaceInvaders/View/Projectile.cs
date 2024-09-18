@@ -1,4 +1,5 @@
 ﻿using SpaceInvaders.Helpers;
+using System.Windows.Forms;
 
 namespace SpaceInvaders
 {
@@ -6,13 +7,13 @@ namespace SpaceInvaders
 
     public partial class Projectile
     {
-        // De manière graphique
+        // Affichage
         public void Render(BufferedGraphics drawingSpace)
         {
             drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x, y);
         }
      
-        // De manière textuelle
+        // De manière textuelle, tirs
         public override string ToString()
         {
             return $"|";

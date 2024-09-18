@@ -18,6 +18,7 @@ namespace SpaceInvaders
 
         private bool Left = false;
         private bool Right = false;
+        private bool space = false;
 
         // Initialisation de l'espace aérien avec un certain nombre de drones
         public PlayForm(List<Player> fleet)
@@ -32,13 +33,16 @@ namespace SpaceInvaders
             // Gestion des touches du clavier
             this.KeyDown += new KeyEventHandler(Pressed);
             this.KeyUp += new KeyEventHandler(Unpressed);
-            
+
             this.fleet = fleet;
+            this.shoot = shoot;
         }
+   
 
         // Appuis sur les touches du clavier
         private void Pressed(object sender, KeyEventArgs key)
         {
+            // Touches pour se déplacer
             if (key.KeyCode == Keys.A || key.KeyCode == Keys.Left)
             {
                 Left = true;
@@ -47,11 +51,17 @@ namespace SpaceInvaders
             {
                 Right = true;
             }
+            // Touches pour tirer
+            if (key.KeyCode == Keys.Space)
+            {
+                space = true;
+            }
         }
 
         // Touche relacher
         private void Unpressed(object sender, KeyEventArgs key)
         {
+            // Touches pour se déplacer
             if (key.KeyCode == Keys.A || key.KeyCode == Keys.Left)
             {
                 Left = false;
@@ -60,7 +70,17 @@ namespace SpaceInvaders
             {
                 Right = false;
             }
+            // Touches pour tirer
+            if (key.KeyCode == Keys.Space)
+            {
+                space = false;
+            }
         }
+
+        
+      
+
+
 
         // Affichage de la situation actuelle
         private void Render()
@@ -95,7 +115,7 @@ namespace SpaceInvaders
             }
             foreach (Projectile projectile in shoot)
             {
-                projectile.Update();
+                projectile.Update(space);
             }
         }
 

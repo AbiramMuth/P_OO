@@ -21,6 +21,7 @@ namespace SpaceInvaders
             fleet.Add(drone);
 
 
+
             // Démarrage
             Application.Run(new PlayForm(fleet));
         }

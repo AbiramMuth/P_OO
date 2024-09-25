@@ -6,16 +6,19 @@ namespace SpaceInvaders
 
     public partial class PlayForm : Form
     {
-        // La flotte est l'ensemble des drones qui évoluent dans notre espace aérien
+        
         private List<Player> fleet;
         private List<Projectile> shoot = new List<Projectile>();
         private List<Ennemi> ennemi;
 
         BufferedGraphicsContext currentContext;
         BufferedGraphics airspace;
-
+        
+        // Booléen pour les déplacements
         private bool Left = false;
         private bool Right = false;
+
+        // booléen pour les tirs
         private bool space = false;
 
         // Initialisation de l'espace aérien avec un certain nombre de drones

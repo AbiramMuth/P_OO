@@ -10,8 +10,8 @@ namespace SpaceInvaders
         // Affichage du tirs
         public void Render(BufferedGraphics drawingSpace)
         {
+            // Dessin du tirs
             drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x, y);
-
         }
      
         // De manière textuelle, tirs

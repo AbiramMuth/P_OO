@@ -6,12 +6,14 @@ namespace SpaceInvaders
 
     public partial class Player
     {
+        // Image du vaisseau
         private Image spaceImage = Image.FromFile("Images/space.png");
 
         // De manière graphique
         public void Render(BufferedGraphics drawingSpace)
         {
-            drawingSpace.Graphics.DrawImage(spaceImage, x - 13, y - 5, 32, 32); // a la postion du drone, 8,8 (taille de l'ellipse rond)
+            // Dessin et position de l'image du vaisseau
+            drawingSpace.Graphics.DrawImage(spaceImage, x - 13, y - 5, 32, 32); 
             drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x + 5, y - 5);
         }
      

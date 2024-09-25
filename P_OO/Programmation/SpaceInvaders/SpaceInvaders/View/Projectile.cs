@@ -7,10 +7,11 @@ namespace SpaceInvaders
 
     public partial class Projectile
     {
-        // Affichage
+        // Affichage du tirs
         public void Render(BufferedGraphics drawingSpace)
         {
             drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x, y);
+
         }
      
         // De manière textuelle, tirs

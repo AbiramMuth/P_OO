@@ -1,3 +1,5 @@
+using SpaceInvaders.Helpers;
+
 namespace SpaceInvaders
 {
     internal static class Program
@@ -12,18 +14,26 @@ namespace SpaceInvaders
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            // Création de la flotte de drones
+            // Création du vaisseau du joueur
             List<Player> fleet= new List<Player>();
-            Player drone = new Player();
-            drone.x = PlayForm.WIDTH / 2;
-            drone.y = PlayForm.HEIGHT - 50;
-            drone.name = "BOB";
-            fleet.Add(drone);
+            Player vaisseau = new Player();
+            vaisseau.x = TextHelpers.SCREEN_WIDTH / 2;
+            vaisseau.y = TextHelpers.SCREEN_HEIGHT - 50;
+            vaisseau.name = "BOB";
+            fleet.Add(vaisseau);
 
-
+            // Création des ennemis
+            List<Ennemi> ennemis = new List<Ennemi>();
+            for (int i = 1; i < TextHelpers.alea.Next(5, 60); i++)
+            {
+                Ennemi ennemi = new Ennemi();
+                ennemi.x = TextHelpers.alea.Next(5, TextHelpers.SCREEN_WIDTH - 5);
+                ennemi.y = 0;
+                ennemis.Add(ennemi);
+            }
 
             // Démarrage
-            Application.Run(new PlayForm(fleet));
+            Application.Run(new PlayForm(fleet, ennemis));
         }
     }
 }

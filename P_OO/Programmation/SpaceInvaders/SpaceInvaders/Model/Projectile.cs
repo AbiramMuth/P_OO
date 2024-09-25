@@ -5,16 +5,13 @@
     {
         public int x;                                // Position en X depuis la gauche de l'espace aérien
         public int y;                                 // Position en Y depuis le haut de l'espace aérien
+        private int _speed = 10;
 
         // Mouvement de l'utilisateur horizontalement, sans sortir du cadre du jeu
-        public void Update(bool space)
+        public void Update()
         {
-            if(!space) 
-            {
-                y -= 5;
-            }
-           
 
+            y -= _speed;
 
         }
     }

@@ -6,12 +6,12 @@ namespace SpaceInvaders
 
     public partial class Player
     {
-        private Pen droneBrush = new Pen(new SolidBrush(Color.Purple), 3); // brush permet de dessiner, couleur, l'epaisseur
+        private Image spaceImage = Image.FromFile("Images/space.png");
 
         // De manière graphique
         public void Render(BufferedGraphics drawingSpace)
         {
-            drawingSpace.Graphics.DrawEllipse(droneBrush, new Rectangle(x - 4, y - 2, 8, 8)); // a la postion du drone, 8,8 (taille de l'ellipse rond)
+            drawingSpace.Graphics.DrawImage(spaceImage, x - 13, y - 5, 32, 32); // a la postion du drone, 8,8 (taille de l'ellipse rond)
             drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x + 5, y - 5);
         }
      

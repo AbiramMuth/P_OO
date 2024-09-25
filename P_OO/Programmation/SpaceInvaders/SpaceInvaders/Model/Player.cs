@@ -1,4 +1,6 @@
-﻿namespace SpaceInvaders
+﻿using SpaceInvaders.Helpers;
+
+namespace SpaceInvaders
 {
     // Cette partie de la classe Drone définit ce qu'est un drone par un modèle numérique
     public partial class Player
@@ -24,7 +26,7 @@
             }
             if (Right)
             {
-                if (!(x + 5 >= PlayForm.WIDTH))
+                if (!(x + 5 >= TextHelpers.SCREEN_WIDTH))
                 {
                     x += 5;
                 }

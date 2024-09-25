@@ -1,4 +1,6 @@
-﻿namespace SpaceInvaders
+﻿using SpaceInvaders.Helpers;
+
+namespace SpaceInvaders
 {
     partial class PlayForm
     {
@@ -41,7 +43,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(WIDTH, HEIGHT);
+            this.ClientSize = new System.Drawing.Size(TextHelpers.SCREEN_WIDTH, TextHelpers.SCREEN_HEIGHT);
             this.Name = "AirSpace";
             this.Text = "AirSpace";
             this.ResumeLayout(false);

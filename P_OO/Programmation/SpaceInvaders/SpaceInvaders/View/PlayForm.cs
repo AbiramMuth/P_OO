@@ -6,12 +6,10 @@ namespace SpaceInvaders
 
     public partial class PlayForm : Form
     {
-        public static readonly int WIDTH = 1200;        // Dimensions of the airspace
-        public static readonly int HEIGHT = 600;
-
         // La flotte est l'ensemble des drones qui évoluent dans notre espace aérien
         private List<Player> fleet;
         private List<Projectile> shoot = new List<Projectile>();
+        private List<Ennemi> ennemi;
 
         BufferedGraphicsContext currentContext;
         BufferedGraphics airspace;
@@ -21,7 +19,7 @@ namespace SpaceInvaders
         private bool space = false;
 
         // Initialisation de l'espace aérien avec un certain nombre de drones
-        public PlayForm(List<Player> fleet)
+        public PlayForm(List<Player> fleet, List<Ennemi> ennemi)
         {
             InitializeComponent();
             // Gets a reference to the current BufferedGraphicsContext
@@ -36,8 +34,9 @@ namespace SpaceInvaders
 
             this.fleet = fleet;
             this.shoot = shoot;
+            this.ennemi = ennemi;
         }
-   
+        
 
         // Appuis sur les touches du clavier
         private void Pressed(object sender, KeyEventArgs key)
@@ -58,6 +57,7 @@ namespace SpaceInvaders
             }
         }
 
+
         // Touche relacher
         private void Unpressed(object sender, KeyEventArgs key)
         {
@@ -76,9 +76,7 @@ namespace SpaceInvaders
                 space = false;
             }
         }
-
         
-      
 
 
 
@@ -87,15 +85,22 @@ namespace SpaceInvaders
         {
             airspace.Graphics.Clear(Color.Violet);
 
-            // draw drones
-            foreach (Player drone in fleet)
+            // dessin du vaisseau
+            foreach (Player vaisseau in fleet)
             {
-                drone.Render(airspace);
+                vaisseau.Render(airspace);
             }
+            // dessin des tirs
             foreach (Projectile projectile in shoot)
             {
                 projectile.Render(airspace);
             }
+            // dessin des ennemi
+            foreach (Ennemi alien in ennemi)
+            {
+                alien.Render(airspace);
+            }
+
             airspace.Render();
         }
 
@@ -103,19 +108,25 @@ namespace SpaceInvaders
         // update sert juste pour la position
         private void Update(int interval)
         {
-            foreach (Player drone in fleet)
+            foreach (Player vaisseau in fleet)
             {
-                drone.Update(Left, Right);
+                vaisseau.Update(Left, Right);
 
-                Projectile projectile = new Projectile();
-                projectile.x = drone.x;
-                projectile.y = drone.y;
-                shoot.Add(projectile);
-
+                if (space)
+                {
+                    Projectile projectile = new Projectile();
+                    projectile.x = vaisseau.x;
+                    projectile.y = vaisseau.y;
+                    shoot.Add(projectile);
+                }
             }
             foreach (Projectile projectile in shoot)
             {
-                projectile.Update(space);
+                projectile.Update();
+            }
+            foreach (Ennemi alien in ennemi)
+            {
+                alien.Update();
             }
         }
 

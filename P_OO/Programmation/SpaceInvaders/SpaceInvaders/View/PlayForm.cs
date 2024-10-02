@@ -10,6 +10,7 @@ namespace SpaceInvaders
         private List<Player> fleet;
         private List<Projectile> shoot = new List<Projectile>();
         private List<Ennemi> ennemi;
+        private List<Obstacle> protection;
 
         BufferedGraphicsContext currentContext;
         BufferedGraphics airspace;
@@ -22,7 +23,7 @@ namespace SpaceInvaders
         private bool space = false;
 
         // Initialisation de l'espace aérien avec un certain nombre de drones
-        public PlayForm(List<Player> fleet, List<Ennemi> ennemi)
+        public PlayForm(List<Player> fleet, List<Ennemi> ennemi, List<Obstacle> protection)
         {
             InitializeComponent();
             // Gets a reference to the current BufferedGraphicsContext
@@ -38,8 +39,9 @@ namespace SpaceInvaders
             this.fleet = fleet;
             this.shoot = shoot;
             this.ennemi = ennemi;
+            this.protection = protection;
         }
-        
+
 
         // Appuis sur les touches du clavier
         private void Pressed(object sender, KeyEventArgs key)
@@ -103,7 +105,10 @@ namespace SpaceInvaders
             {
                 alien.Render(airspace);
             }
-
+            foreach(Obstacle protect in protection)
+            {
+                protect.Render(airspace);
+            }
             airspace.Render();
         }
 
@@ -130,6 +135,10 @@ namespace SpaceInvaders
             foreach (Ennemi alien in ennemi)
             {
                 alien.Update();
+            }
+            foreach (Obstacle protect in protection)
+            {
+                protect.Update(shoot);
             }
         }
 

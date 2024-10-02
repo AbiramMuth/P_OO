@@ -15,7 +15,7 @@ namespace SpaceInvaders
             ApplicationConfiguration.Initialize();
 
             // Création du vaisseau du joueur
-            List<Player> fleet= new List<Player>();
+            List<Player> fleet = new List<Player>();
             Player vaisseau = new Player();
             vaisseau.x = TextHelpers.SCREEN_WIDTH / 2;
             vaisseau.y = TextHelpers.SCREEN_HEIGHT - 50;
@@ -24,6 +24,7 @@ namespace SpaceInvaders
 
             // Création des ennemis
             List<Ennemi> ennemis = new List<Ennemi>();
+
             for (int i = 1; i < TextHelpers.alea.Next(5, 60); i++)
             {
                 Ennemi ennemi = new Ennemi();
@@ -32,8 +33,21 @@ namespace SpaceInvaders
                 ennemis.Add(ennemi);
             }
 
+            List<Obstacle> protection = new List<Obstacle>();
+
+            Obstacle obstacle = new Obstacle();
+            obstacle.x = 45;
+            obstacle.y = TextHelpers.SCREEN_HEIGHT - 100;
+            protection.Add(obstacle);
+
+
+
+
+
+
+
             // Démarrage
-            Application.Run(new PlayForm(fleet, ennemis));
+            Application.Run(new PlayForm(fleet, ennemis, protection));
         }
     }
 }

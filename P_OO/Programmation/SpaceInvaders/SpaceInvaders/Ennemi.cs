@@ -19,13 +19,12 @@ namespace SpaceInvaders
 
         public void Update() 
         {
-
             y += _speed;
         }
 
         public void Render(BufferedGraphics drawingSpace)
         {
-            drawingSpace.Graphics.DrawImage(ennemiImage, x - ennemiImage.Width / 2, y - ennemiImage.Height / 2, 32, 32);
+            drawingSpace.Graphics.DrawImage(ennemiImage, x - ennemiImage.Width / 2, y - ennemiImage.Height / 2, 40, 40);
         }
     }
 }

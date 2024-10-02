@@ -13,8 +13,9 @@ namespace SpaceInvaders
         public void Render(BufferedGraphics drawingSpace)
         {
             // Dessin et position de l'image du vaisseau
-            drawingSpace.Graphics.DrawImage(spaceImage, x - 13, y - 5, 32, 32); 
-            drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x + 5, y - 5);
+            drawingSpace.Graphics.DrawImage(spaceImage, x - 13, y - 5, 40, 40); 
+            // position du texte BOB
+            drawingSpace.Graphics.DrawString($"{this}", TextHelpers.drawFont, TextHelpers.writingBrush, x + 10, y - 10);
         }
      
         // De manière textuelle

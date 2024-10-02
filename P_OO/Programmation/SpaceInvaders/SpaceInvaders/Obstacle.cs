@@ -11,10 +11,11 @@ namespace SpaceInvaders
     public class Obstacle
     {
 
-        public int x;
+        public int x;                   // position
         public int y;
-        private int _speed = 10;
-        public int countx = 0;
+        public int _speed = 10;         // Vitesse
+        public int countx = 0;          
+        bool move = false;              
 
         private Image obstacleImage = Image.FromFile("Images/bouclier.png");
 
@@ -22,8 +23,26 @@ namespace SpaceInvaders
         // faire en sorte que s'il se fait toucher 3 fois il est détruit(disparait)
         public void Update(List<Projectile> shoot)
         {
-            x += _speed;
-            countx++;
+            // Si proche du bord de l'écran de gauche, pars à droite 
+            if (x <= 45)
+            {
+                move = true;
+            }
+            if (move == true)
+            {
+                x += _speed;
+                countx++;
+            }
+            // Si proche du bord de l'écran de droite, pars à gauche 
+            if (x >= TextHelpers.SCREEN_WIDTH)
+            {
+                move = false;
+            }
+            if (move == false)
+            {
+                x -= _speed;
+                countx--;
+            }
         }
 
 

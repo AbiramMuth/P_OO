@@ -1,4 +1,5 @@
 using SpaceInvaders.Helpers;
+using System.Diagnostics.Metrics;
 
 namespace SpaceInvaders
 {
@@ -39,12 +40,6 @@ namespace SpaceInvaders
             obstacle.x = 45;
             obstacle.y = TextHelpers.SCREEN_HEIGHT - 100;
             protection.Add(obstacle);
-
-
-
-
-
-
 
             // Démarrage
             Application.Run(new PlayForm(fleet, ennemis, protection));

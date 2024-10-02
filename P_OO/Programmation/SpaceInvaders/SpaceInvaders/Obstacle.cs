@@ -13,8 +13,8 @@ namespace SpaceInvaders
 
         public int x;                   // position
         public int y;
-        public int _speed = 10;         // Vitesse
-        public int countx = 0;          
+        private int _speed = 10;         // Vitesse
+        private int countx = 0;          
         bool move = false;              
 
         private Image obstacleImage = Image.FromFile("Images/bouclier.png");

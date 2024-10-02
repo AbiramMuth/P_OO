@@ -1,10 +1,14 @@
 using SpaceInvaders.Helpers;
+using System;
 using System.Diagnostics.Metrics;
+using System.Timers;
 
 namespace SpaceInvaders
 {
     internal static class Program
     {
+        private static List<Ennemi> ennemis = new List<Ennemi>();
+        private static System.Timers.Timer SpawnTimer;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -14,7 +18,7 @@ namespace SpaceInvaders
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-
+            
             // Création du vaisseau du joueur
             List<Player> fleet = new List<Player>();
             Player vaisseau = new Player();
@@ -23,16 +27,14 @@ namespace SpaceInvaders
             vaisseau.name = "BOB";
             fleet.Add(vaisseau);
 
-            // Création des ennemis
-            List<Ennemi> ennemis = new List<Ennemi>();
+            SpawnTimer = new System.Timers.Timer();
+            // temps écoulé
+            SpawnTimer.Elapsed += AlienSpawn;
+            TimingAlien();
 
-            for (int i = 1; i < TextHelpers.alea.Next(5, 60); i++)
-            {
-                Ennemi ennemi = new Ennemi();
-                ennemi.x = TextHelpers.alea.Next(5, TextHelpers.SCREEN_WIDTH - 5);
-                ennemi.y = 0;
-                ennemis.Add(ennemi);
-            }
+            
+
+
 
             List<Obstacle> protection = new List<Obstacle>();
 
@@ -44,5 +46,32 @@ namespace SpaceInvaders
             // Démarrage
             Application.Run(new PlayForm(fleet, ennemis, protection));
         }
+        private static void AlienSpawn(object sender, ElapsedEventArgs e)
+        {
+            // Création des ennemis
+            Ennemi ennemi = new Ennemi();
+
+            ennemi.x = TextHelpers.alea.Next(5, TextHelpers.SCREEN_WIDTH - 5);
+            ennemi.y = 0;
+            ennemis.Add(ennemi);
+
+            // Temps d'apparition de l'ennemi
+            TimingAlien();
+        }
+        /// <summary>
+        /// Apparition de l'ennemi
+        /// </summary>
+        public static void TimingAlien()
+        {
+            // 1 à 3s
+            int timing =TextHelpers.alea.Next(1000, 3000);
+
+            SpawnTimer.Interval = timing;
+
+            // Re-démarrer le timer avec le nouvel intervalle
+            SpawnTimer.Start();
+            Console.WriteLine(timing);
+        }
+
     }
 }

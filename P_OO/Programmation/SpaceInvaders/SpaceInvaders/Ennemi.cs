@@ -12,8 +12,8 @@ namespace SpaceInvaders
         Random alea = new Random();
 
         public int x;                                // Position X, de l'ennemi
-        public int y;                                 // Position en Y de l'ennemi
-        private int _speed = 10;
+        public int y;                                // Position en Y de l'ennemi
+        private int _speed = 8;                     // Vitesse des ennemis (plus c'est haut, plus c'est rapide)  
 
         private Image ennemiImage = Image.FromFile("Images/Alien.png");
 

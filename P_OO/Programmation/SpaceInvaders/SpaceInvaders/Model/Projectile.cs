@@ -10,7 +10,7 @@
         // Mouvement de l'utilisateur horizontalement, sans sortir du cadre du jeu
         public void Update()
         {
-
+            
             y -= _speed;
         }
     }

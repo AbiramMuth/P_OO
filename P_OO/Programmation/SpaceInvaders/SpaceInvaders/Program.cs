@@ -8,7 +8,10 @@ namespace SpaceInvaders
     internal static class Program
     {
         private static List<Ennemi> ennemis = new List<Ennemi>();
+        private static List<Player> fleet = new List<Player>();
+        private static List<Obstacle> protection = new List<Obstacle>();
         private static System.Timers.Timer SpawnTimer;
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -19,12 +22,11 @@ namespace SpaceInvaders
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             
-            // Création du vaisseau du joueur
-            List<Player> fleet = new List<Player>();
+
             Player vaisseau = new Player();
             vaisseau.x = TextHelpers.SCREEN_WIDTH / 2;
             vaisseau.y = TextHelpers.SCREEN_HEIGHT - 50;
-            vaisseau.name = "BOB";
+            vaisseau.name = "Player";
             fleet.Add(vaisseau);
 
             SpawnTimer = new System.Timers.Timer();
@@ -32,11 +34,7 @@ namespace SpaceInvaders
             SpawnTimer.Elapsed += AlienSpawn;
             TimingAlien();
 
-            
-
-
-
-            List<Obstacle> protection = new List<Obstacle>();
+ 
 
             Obstacle obstacle = new Obstacle();
             obstacle.x = 45;
@@ -45,6 +43,7 @@ namespace SpaceInvaders
 
             // Démarrage
             Application.Run(new PlayForm(fleet, ennemis, protection));
+
         }
         private static void AlienSpawn(object sender, ElapsedEventArgs e)
         {
@@ -64,7 +63,7 @@ namespace SpaceInvaders
         public static void TimingAlien()
         {
             // 1 à 3s
-            int timing =TextHelpers.alea.Next(1000, 3000);
+            int timing =TextHelpers.alea.Next(1000, 2000);
 
             SpawnTimer.Interval = timing;
 

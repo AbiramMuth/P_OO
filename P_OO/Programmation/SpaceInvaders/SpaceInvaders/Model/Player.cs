@@ -21,14 +21,14 @@ namespace SpaceInvaders
             {
                 if (!(x - 25 <= 0))
                 {
-                    x -= 10;
+                    x -= 15;
                 }
             }
             if (Right)
             {
                 if (!(x + 40 >= TextHelpers.SCREEN_WIDTH))
                 {
-                    x += 10;
+                    x += 15;
                 }
             }
         }

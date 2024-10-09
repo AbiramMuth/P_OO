@@ -6,9 +6,9 @@ namespace SpaceInvaders
 
     public partial class PlayForm : Form
     {
-        
         private List<Player> fleet;
         private List<Projectile> shoot = new List<Projectile>();
+        private List<Projectile> shoot2 = new List<Projectile>();
         private List<Ennemi> ennemi;
         private List<Obstacle> protection;
 
@@ -19,6 +19,7 @@ namespace SpaceInvaders
         private bool Left = false;
         private bool Right = false;
 
+        private bool obstacleshoot = false;
         // booléen pour les tirs
         private bool space = false;
 
@@ -107,7 +108,18 @@ namespace SpaceInvaders
             }
             foreach(Obstacle protect in protection)
             {
-                protect.Render(airspace);
+                Projectile tirs = new Projectile();
+                if (space)
+                {
+                    protect.Render(airspace);
+                    obstacleshoot = false;
+                }
+                else
+                {
+                    protect.Render2(airspace);
+                   obstacleshoot = true;
+                }
+
             }
             airspace.Render();
         }
@@ -122,10 +134,10 @@ namespace SpaceInvaders
 
                 if (space)
                 {
-                    Projectile projectile = new Projectile();
-                    projectile.x = vaisseau.x;
-                    projectile.y = vaisseau.y;
-                    shoot.Add(projectile);
+                    Projectile projectile2 = new Projectile();
+                    projectile2.x = vaisseau.x + 2;
+                    projectile2.y = vaisseau.y;
+                    shoot.Add(projectile2);
                 }
             }
             foreach (Projectile projectile in shoot)
@@ -139,6 +151,15 @@ namespace SpaceInvaders
             foreach (Obstacle protect in protection)
             {
                 protect.Update(shoot);
+
+                if (obstacleshoot)
+                {
+                    Projectile projectile = new Projectile();
+                    projectile.x = protect.x - 25;
+                    projectile.y = protect.y - 50;
+                    shoot.Add(projectile);
+                }
+                
             }
         }
 

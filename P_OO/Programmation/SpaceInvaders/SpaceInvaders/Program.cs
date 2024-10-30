@@ -2,6 +2,7 @@ using SpaceInvaders.Helpers;
 using System;
 using System.Diagnostics.Metrics;
 using System.Timers;
+using System.Drawing;
 
 namespace SpaceInvaders
 {
@@ -10,7 +11,13 @@ namespace SpaceInvaders
         private static List<Ennemi> ennemis = new List<Ennemi>();
         private static List<Player> fleet = new List<Player>();
         private static List<Obstacle> protection = new List<Obstacle>();
+        private static List<Projectile> shoot = new List<Projectile>();
+        private static List<ProjectileAlien> tirs = new List<ProjectileAlien>();
         private static System.Timers.Timer SpawnTimer;
+        public static bool CheckCollision(Ennemi enemy, Projectile projectile, ProjectileAlien tirs)
+        {
+            return enemy.BoundingBox.IntersectsWith(projectile.BoundingBox);
+        }
 
         /// <summary>
         ///  The main entry point for the application.
@@ -21,7 +28,6 @@ namespace SpaceInvaders
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            
 
             Player vaisseau = new Player();
             vaisseau.x = TextHelpers.SCREEN_WIDTH / 2;
@@ -34,26 +40,22 @@ namespace SpaceInvaders
             SpawnTimer.Elapsed += AlienSpawn;
             TimingAlien();
 
- 
-
             Obstacle obstacle = new Obstacle();
             obstacle.x = 45;
             obstacle.y = TextHelpers.SCREEN_HEIGHT - 100;
             protection.Add(obstacle);
 
             // Démarrage
-            Application.Run(new PlayForm(fleet, ennemis, protection));
-
+            Application.Run(new PlayForm(fleet, ennemis, protection, tirs));
         }
+
         private static void AlienSpawn(object sender, ElapsedEventArgs e)
         {
             // Création des ennemis
             Ennemi ennemi = new Ennemi();
-
             ennemi.x = TextHelpers.alea.Next(5, TextHelpers.SCREEN_WIDTH - 5);
             ennemi.y = 0;
             ennemis.Add(ennemi);
-
             // Temps d'apparition de l'ennemi
             TimingAlien();
         }

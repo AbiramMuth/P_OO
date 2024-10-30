@@ -11,14 +11,19 @@ namespace SpaceInvaders
     public class Obstacle
     {
 
-        public int x;                   // position
+        public int x;                           // position
         public int y;
-        private int _speed = 10;         // Vitesse    
+        private int _speed = 30;                // Vitesse    
         bool move = false;
-  
+        public int width;                       // Largeur de l'obstacle
+        public int height;                      // Hauteur de l'obstacle
 
-        private Image obstacleImage = Image.FromFile("Images/bouclier.png");
-        private Image obstacleTirs = Image.FromFile("Images/bouclierTirs.png");
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
+        public int Width { get => width; set => width = value; }
+        public int Height { get => height; set => height = value; }
+
+     
 
 
         // faire en sorte que s'il se fait toucher 3 fois il est détruit(disparait)
@@ -34,7 +39,7 @@ namespace SpaceInvaders
                 x += _speed;
             }
             // Si il est au milieur de l'écran, pars à gauche 
-            if (x >= TextHelpers.SCREEN_WIDTH / 2)
+            if (x >= TextHelpers.SCREEN_WIDTH)
             {
                 move = false;
             }
@@ -46,105 +51,11 @@ namespace SpaceInvaders
 
         public void Render(BufferedGraphics drawingSpace)
         {
-            drawingSpace.Graphics.DrawImage(obstacleImage, x - obstacleImage.Width / 2, y - obstacleImage.Height / 2, 55, 55);   
+            drawingSpace.Graphics.DrawImage(Properties.Resources.bouclier, x - Width / 2, y - Height / 2, 55, 55);   
         }
         public void Render2(BufferedGraphics drawingSpace)
         {
-            drawingSpace.Graphics.DrawImage(obstacleTirs, x - obstacleImage.Width / 2, y - obstacleImage.Height / 2, 55, 55);
+            drawingSpace.Graphics.DrawImage(Properties.Resources.bouclierTirs, x - Width / 2, y - Height / 2, 55, 55);
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// si tu trouves ce message, t'es le goat que tu crois l'être

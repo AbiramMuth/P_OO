@@ -11,8 +11,14 @@ namespace SpaceInvaders
         public string name;                           // Un nom
         public int x;                                // Position en X depuis la gauche de l'espace aérien
         public int y;                                 // Position en Y depuis le haut de l'espace aérien
-
-
+        public int width;                       // Largeur du tirs
+        public int height;                      // Hauteur du tirs
+        public int Width { get => width; set => width = value; }
+        public int Height { get => height; set => height = value; }
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle(x, y, Width, Height); }
+        }
 
         // Mouvement de l'utilisateur horizontalement, sans sortir du cadre du jeu
         public void Update(bool Left, bool Right)

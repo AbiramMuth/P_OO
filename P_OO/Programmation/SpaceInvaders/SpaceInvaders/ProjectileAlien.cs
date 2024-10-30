@@ -17,6 +17,10 @@ namespace SpaceInvaders
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
 
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle(x, y, Width, Height); }
+        }
 
         public ProjectileAlien(int X, int Y)
         {
@@ -27,6 +31,12 @@ namespace SpaceInvaders
         public void Update()
         {
             y += _speed;
+
+            // vérification des collisions entre le tir de l'ennemi et le vaisseau
+            bool CheckCollision(ProjectileAlien tirs, Player vaisseau)
+            {
+                return tirs.BoundingBox.IntersectsWith(vaisseau.BoundingBox);
+            }
         }
 
         public void Render(BufferedGraphics drawingSpace)

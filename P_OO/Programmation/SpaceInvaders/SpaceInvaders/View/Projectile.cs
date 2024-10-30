@@ -15,14 +15,13 @@ namespace SpaceInvaders
         public int Y { get => y; set => y = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
-
        
        
 
         public Projectile()
         {
-            width = 9;
-            height = 15;
+            width = 10;
+            height = 20;
         }
 
         // box du tirs
@@ -40,12 +39,6 @@ namespace SpaceInvaders
             // Dessin de l'image du missile
             drawingSpace.Graphics.DrawImage(Properties.Resources.tirs, x - Width / 2, y - Height / 2, width, height);  
         }
-        // image tirs ennemie
-        //public void Render2(BufferedGraphics drawingSpace)
-        //{
-        //    drawingSpace.Graphics.DrawImage(alientirs, x - alientirs.Width / 2, y - alientirs.Height / 2, Width, Height);
-        //}
-        // De manière textuelle, tirs
         public override string ToString()
         {
             return $"|";

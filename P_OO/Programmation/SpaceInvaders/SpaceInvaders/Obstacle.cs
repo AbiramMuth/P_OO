@@ -23,14 +23,17 @@ namespace SpaceInvaders
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
 
-     
+        public Rectangle BoundingBox
+        {
+            get { return new Rectangle(x, y, Width, Height); }
+        }
 
 
         // faire en sorte que s'il se fait toucher 3 fois il est détruit(disparait)
         public void Update(List<Projectile> shoot)
         {
             // Si proche du bord de l'écran de gauche, pars à droite 
-            if (x <= 45)
+            if (x <= 15)
             {
                 move = true;
             }
@@ -39,13 +42,23 @@ namespace SpaceInvaders
                 x += _speed;
             }
             // Si il est au milieur de l'écran, pars à gauche 
-            if (x >= TextHelpers.SCREEN_WIDTH)
+            if (x >= TextHelpers.SCREEN_WIDTH - 50)
             {
                 move = false;
             }
             if (move == false)
             {
                 x -= _speed;
+            }
+
+            // vérification des collisions entre l'obstacle et les tirs de l'ennemi 
+            //bool CheckCollision(Obstacle protection, ProjectileAlien tirs)
+            //{
+            //    return protection.BoundingBox.IntersectsWith(tirs.BoundingBox);
+            //}
+            bool CheckCollision(Obstacle protection, Ennemi ennemi)
+            {
+                return protection.BoundingBox.IntersectsWith(ennemi.BoundingBox);
             }
         }
 

@@ -7,7 +7,6 @@ namespace SpaceInvaders
     public partial class Player
     {
 
-
         // De manière graphique
         public void Render(BufferedGraphics drawingSpace)
         {

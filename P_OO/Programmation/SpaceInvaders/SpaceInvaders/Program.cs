@@ -14,10 +14,7 @@ namespace SpaceInvaders
         private static List<Projectile> shoot = new List<Projectile>();
         private static List<ProjectileAlien> tirs = new List<ProjectileAlien>();
         private static System.Timers.Timer SpawnTimer;
-        public static bool CheckCollision(Ennemi enemy, Projectile projectile, ProjectileAlien tirs)
-        {
-            return enemy.BoundingBox.IntersectsWith(projectile.BoundingBox);
-        }
+    
 
         /// <summary>
         ///  The main entry point for the application.
@@ -32,6 +29,8 @@ namespace SpaceInvaders
             Player vaisseau = new Player();
             vaisseau.x = TextHelpers.SCREEN_WIDTH / 2;
             vaisseau.y = TextHelpers.SCREEN_HEIGHT - 50;
+            vaisseau.Height = 40;
+            vaisseau.Width = 40;
             vaisseau.name = "Player";
             fleet.Add(vaisseau);
 
@@ -42,7 +41,9 @@ namespace SpaceInvaders
 
             Obstacle obstacle = new Obstacle();
             obstacle.x = 45;
-            obstacle.y = TextHelpers.SCREEN_HEIGHT - 100;
+            obstacle.y = vaisseau.y - 100;
+            obstacle.Height = 40;
+            obstacle.Width = 40;
             protection.Add(obstacle);
 
             // Démarrage

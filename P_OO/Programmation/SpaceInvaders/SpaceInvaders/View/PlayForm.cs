@@ -1,4 +1,5 @@
 using SpaceInvaders.Helpers;
+using System;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SpaceInvaders
@@ -19,7 +20,7 @@ namespace SpaceInvaders
 
         BufferedGraphicsContext currentContext;
         BufferedGraphics airspace;
-        
+
         // Booléen pour les déplacements
         private bool Left = false;
         private bool Right = false;
@@ -30,6 +31,7 @@ namespace SpaceInvaders
 
         private int timershoot = 0;
 
+        private int vieObstacle = 2;
         // nombres aléatoire pour la séquence de tirs pour les ennemis
         private int numberalea = 1;
         private int alienshoot = 4;
@@ -65,7 +67,7 @@ namespace SpaceInvaders
             if (key.KeyCode == Keys.A || key.KeyCode == Keys.Left)
             {
                 Left = true;
-            }         
+            }
             if (key.KeyCode == Keys.D || key.KeyCode == Keys.Right)
             {
                 Right = true;
@@ -100,7 +102,7 @@ namespace SpaceInvaders
         // Affichage de la situation actuelle
         private void Render()
         {
-            airspace.Graphics.Clear(Color.Violet);
+            airspace.Graphics.Clear(Color.Black);
 
             // dessin du vaisseau
             foreach (Player vaisseau in fleet)
@@ -117,7 +119,7 @@ namespace SpaceInvaders
             {
                 alien.Render(airspace);
             }
-            foreach(Obstacle protect in protection)
+            foreach (Obstacle protect in protection)
             {
                 // Si le joueur press espace, l'obstacle devient un mur de protection
                 if (space)
@@ -129,10 +131,10 @@ namespace SpaceInvaders
                 else
                 {
                     protect.Render2(airspace);
-                   obstacleshoot = true;
+                    obstacleshoot = true;
                 }
             }
-            foreach(ProjectileAlien tir in alientirs)
+            foreach (ProjectileAlien tir in alientirs)
             {
                 tir.Render(airspace);
             }
@@ -153,7 +155,7 @@ namespace SpaceInvaders
                     if (timershoot >= 3)
                     {
                         Projectile projectile2 = new Projectile();
-                        projectile2.x = vaisseau.x + 2;
+                        projectile2.x = vaisseau.x - 2;
                         projectile2.y = vaisseau.y;
                         shoot.Add(projectile2);
                         timershoot = 0;
@@ -172,7 +174,7 @@ namespace SpaceInvaders
                     shoot.Remove(projectile);
                 }
             }
-            for (int i=0; i < ennemi.Count; i++)
+            for (int i = 0; i < ennemi.Count; i++)
             {
                 if (ennemi[i].y < TextHelpers.SCREEN_HEIGHT)
                 {
@@ -194,8 +196,8 @@ namespace SpaceInvaders
                     if (timershoot >= 6)
                     {
                         Projectile projectile = new Projectile();
-                        projectile.x = protect.x + 25;
-                        projectile.y = protect.y - 10;
+                        projectile.x = protect.x + 13;
+                        projectile.y = protect.y - 35;
                         shoot.Add(projectile);
                         timershoot = 0;
                     }
@@ -204,18 +206,17 @@ namespace SpaceInvaders
             }
 
 
-            for (int i = shoot.Count - 1; i >= 0; i--)  // On parcourt la liste à l'envers pour éviter les problèmes d'index
+            for (int i = shoot.Count - 1; i >= 0; i--)  // On parcourt la liste des tirs à l'envers pour éviter les problèmes d'index
             {
                 Projectile bullet = shoot[i];
 
                 for (int j = ennemi.Count - 1; j >= 0; j--)  // Parcours aussi la liste d'ennemis à l'envers
                 {
                     Ennemi enemy = ennemi[j];
-                    Console.WriteLine(shoot);
-                    Console.WriteLine(ennemi);
+                    Obstacle obstacle = protection[0];
 
                     // supprime les ennemis qui sort de l'écran
-                    if(enemy.y >= TextHelpers.SCREEN_HEIGHT)
+                    if (enemy.y >= TextHelpers.SCREEN_HEIGHT)
                     {
                         ennemi.RemoveAt(j);
                     }
@@ -227,7 +228,7 @@ namespace SpaceInvaders
                         break;
                     }
                     // délai aléatoires pour les tirs pour les ennemis
-                    if (enemy._timershoot >= alea.Next(100, 300))
+                    if (enemy._timershoot >= alea.Next(30, 80))       //100, 300
                     {
                         ProjectileAlien projectile = new ProjectileAlien(enemy.x - 5, enemy.y - 40);
                         projectile.Update();
@@ -235,10 +236,23 @@ namespace SpaceInvaders
                         enemy._timershoot = 0;
                     }
                     enemy._timershoot++;
+
+                    // Collision entre l'ennemi et l'obstacle
+                    // les ennemis disparaissent en touchant l'obstacle
+                    if (obstacle.BoundingBox.IntersectsWith(enemy.BoundingBox))
+                    {
+                        ennemi.RemoveAt(j);
+                        break;
+                    }
                 }
             }
-            for (int i=0; i < alientirs.Count; i++)
+                  
+            // collision tirs ennemi et le joueur
+            for (int i = alientirs.Count - 1; i >= 0; i--)
             {
+                ProjectileAlien alientir = alientirs[i];
+                Player vaisseau = fleet[0];
+
                 // supprime le tirs ennemis si il sort de l'écran
                 if (alientirs[i].y >= TextHelpers.SCREEN_HEIGHT)
                 {
@@ -248,7 +262,34 @@ namespace SpaceInvaders
                 {
                     alientirs[i].Update();
                 }
+                // en cas de collision supprime le tirs et le joueur qui à donc perdu
+                if (alientir.BoundingBox.IntersectsWith(vaisseau.BoundingBox))
+                {
+                    alientirs.Remove(alientir);
+                    Application.Exit();
+                    Console.WriteLine("Player touched");
+                    break;
+                }
+
+
+                // Pas réussi, l'obstacle doit disparaitre quand il se fait toucher
+                // ce code, fais juste en sorte que dès qu'il se fait toucher cela affiche une erreur
+                //Obstacle obstacle = protection.ToList()[0];
+
+                //if (obstacle.BoundingBox.IntersectsWith(alientir.BoundingBox))
+                //{
+                //    vieObstacle--;
+                //    alientirs.Remove(alientir);
+                //    //if (vieObstacle == 1)
+                //    //{
+                //    protection.Remove(obstacle);
+                //    //}
+
+                //    break;
+                //}
             }
+
+
         }
 
         // Méthode appelée à chaque frame
